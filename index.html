@@ -81,10 +81,10 @@
             <!-- Home Page Section -->
             <section id="home" class="page-section">
                 <!-- Hero Introduction Section -->
-                <div class="text-center py-24">
-                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">curious. driven. hungry.</h1>
-                    <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-                        i'm aman sonawane, a private equity analyst exploring the intersections of technology, finance, and human experience. this is my personal space to document my journey, share insights, and build for the greater good.
+                <div class="text-center pt-24 pb-32">
+                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">curious. driven. hungry.</h1>
+                    <p class="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
+                        hi, my name is aman. welcome to my small corner in this universe. i am a founding pe analyst at <a href="https://www.successioncapital.in/" target="_blank" rel="noopener noreferrer" class="underline hover:text-white transition-all duration-200 inline-block transform hover:scale-110">scpi</a>. i love reading, vibe coding, motorcycling & playing video games. this is my personal space to document my journey, share insights, and write about things i find interesting.
                     </p>
                 </div>
                 
@@ -116,12 +116,14 @@
         </main>
         
         <!-- Footer Section -->
-        <footer class="mt-16 pt-8 border-t border-gray-800 flex justify-between items-center text-sm text-gray-500">
+        <footer class="mt-16 pt-8 border-t border-gray-800 flex justify-between items-center text-sm text-gray-200">
             <div>
                 <a href="mailto:aman@successioncapital.in" class="hover:text-white transition-colors duration-300">aman@successioncapital.in</a>
             </div>
             <div>
-                <a href="https://www.linkedin.com/in/aman-sonawane/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors duration-300">my linkedin</a>
+                <a href="https://www.linkedin.com/in/aman-sonawane/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors duration-300">Li</a>
+                <span class="mx-2">|</span>
+                <a href="https://x.com/amansonawane_04" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors duration-300">X</a>
             </div>
         </footer>
 
@@ -362,12 +364,9 @@
                     date: "2025-08-01",
                     summary: "exploring how minimalism and simplicity can lead to more effective and user-friendly digital products...",
                     content: `<p>in a world saturated with information and features, simplicity stands out. it's not about stripping away everything, but about being intentional. good design is about making something easy to understand and use, and often, that means removing the unnecessary.</p><p>one of the core principles of simple design is clarity. can a user immediately understand what they are looking at and what they can do? if the answer is no, the design has failed. this involves using clear language, intuitive layouts, and a visual hierarchy that guides the user's eye to the most important elements.</p>`,
-                    likes: 27,
+                    likes: 0,
                     isLiked: false,
-                    comments: [
-                        { name: 'jane doe', date: 'aug 02, 2025', text: 'great insights, thanks for sharing!' },
-                        { name: 'sam smith', date: 'aug 03, 2025', text: 'this is a really interesting perspective.' }
-                    ]
+                    comments: []
                 },
                 {
                     slug: "hypothetical-what-if-you-got-into-iim-a-and-did-not-sit-for-placements",
@@ -375,7 +374,7 @@
                     date: "2025-07-22",
                     summary: "a beginner's guide to the utility-first css framework. learn how to set it up and start building beautiful, custom designs...",
                     content: `<p>tailwind css has taken the front-end world by storm, and for good reason. it offers a different approach to styling: instead of writing custom css classes, you apply pre-existing utility classes directly in your html.</p><p>this might sound messy at first, but it has profound benefits. it eliminates the need for naming conventions like bem, prevents css bloat, and makes your styling more consistent and maintainable.</p>`,
-                    likes: 42,
+                    likes: 0,
                     isLiked: false,
                     comments: []
                 },
@@ -385,7 +384,7 @@
                     date: "2025-07-15",
                     summary: "a deep dive into asynchronous javascript. we'll compare the classic promise syntax with the modern async/await approach...",
                     content: `<p>asynchronous operations are fundamental to modern web development. javascript, being single-threaded, relies on tools like promises and async/await to handle tasks like api calls without blocking the main thread.</p>`,
-                    likes: 18,
+                    likes: 0,
                     isLiked: false,
                     comments: []
                 },
@@ -410,7 +409,7 @@
             }
 
             function createSubscriptionSectionHTML() {
-                return `<div class="mt-16 pt-8 border-t border-gray-800"><h2 class="text-2xl font-bold text-white mb-3">subscribe to the newsletter</h2><p class="text-gray-400 mb-6">get notified whenever i post. no spam. ever.</p><form class="subscription-form flex flex-col sm:flex-row gap-3"><input type="email" required placeholder="your.email@example.com" class="w-full px-4 py-2 bg-gray-950/80 border border-gray-700 rounded-md text-white focus:ring-2 focus:ring-white focus:outline-none transition-all duration-300"><button type="submit" class="bg-white text-black font-semibold px-5 py-2 rounded-md hover:bg-gray-300 transition-colors duration-300 flex-shrink-0">subscribe</button></form><div class="subscription-message mt-4 text-green-400"></div></div>`;
+                return `<div class="mt-16 pt-8 border-t border-gray-800"><h2 class="text-2xl font-bold text-white mb-3">subscribe to the newsletter</h2><p class="text-gray-200 mb-6">get notified whenever i post. no spam. ever.</p><form class="subscription-form flex flex-col sm:flex-row gap-3"><input type="email" required placeholder="your.email@example.com" class="w-full px-4 py-2 bg-gray-950/80 border border-gray-700 rounded-md text-white focus:ring-2 focus:ring-white focus:outline-none transition-all duration-300"><button type="submit" class="bg-white text-black font-semibold px-5 py-2 rounded-md hover:bg-gray-300 transition-colors duration-300 flex-shrink-0">subscribe</button></form><div class="subscription-message mt-4 text-green-400"></div></div>`;
             }
 
             function createPostCard(post) {
