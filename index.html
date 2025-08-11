@@ -134,67 +134,47 @@
             // --- Canvas Animation Setup ---
             const canvas = document.getElementById('starfield');
             const ctx = canvas.getContext('2d');
-
-            let stars = [];
-            let shootingStar = {};
             
             function setupCanvas() {
+                if (!canvas) return;
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
-                stars = [];
+                let stars = [];
                 for (let i = 0; i < 400; i++) {
-                    stars.push({
-                        x: Math.random() * canvas.width,
-                        y: Math.random() * canvas.height,
-                        radius: Math.random() * 1.2,
-                        alpha: Math.random()
-                    });
+                    stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, radius: Math.random() * 1.2, alpha: Math.random() });
                 }
-                resetShootingStar();
-            }
-
-            function resetShootingStar() {
-                shootingStar = {
-                    x: Math.random() * canvas.width,
-                    y: -10,
-                    len: Math.random() * 80 + 10,
-                    speed: Math.random() * 5 + 3,
-                    angle: Math.PI / 4, // 45 degrees
-                    alpha: 1
-                };
-            }
-
-            function draw() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
-                // Draw stars
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-                stars.forEach(star => {
+                function draw() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                    stars.forEach(star => {
+                        ctx.save();
+                        ctx.globalAlpha = star.alpha;
+                        ctx.beginPath();
+                        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.restore();
+                    });
+
+                    const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrollPercentage = scrollMax > 0 ? window.scrollY / scrollMax : 0;
+                    const starX = canvas.width - (scrollPercentage * (canvas.width + 300));
+                    const starY = scrollPercentage * (canvas.height + 300) - 150;
+
                     ctx.save();
-                    ctx.globalAlpha = star.alpha;
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+                    ctx.lineWidth = 2;
                     ctx.beginPath();
-                    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-                    ctx.fill();
+                    ctx.moveTo(starX, starY);
+                    ctx.lineTo(starX + 150, starY - 150);
+                    ctx.stroke();
                     ctx.restore();
-                });
-
-                // Draw shooting star based on scroll
-                const scrollPercentage = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-                const starX = scrollPercentage * (canvas.width + 200) - 100; // Move across screen
-                const starY = starX; // Diagonal movement
-
-                ctx.save();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.moveTo(starX, starY);
-                ctx.lineTo(starX - 150, starY - 150); // Tail of the star
-                ctx.stroke();
-                ctx.restore();
+                }
+                
+                window.addEventListener('resize', setupCanvas);
+                window.addEventListener('scroll', draw);
+                draw(); // Initial draw
             }
-
-            window.addEventListener('resize', setupCanvas);
-            window.addEventListener('scroll', draw);
             
             // --- DATA ---
             const blogPosts = [
@@ -231,26 +211,6 @@
                     isLiked: false,
                     comments: []
                 },
-                {
-                    slug: "building-a-personal-brand-as-a-developer",
-                    title: "building a personal brand as a developer",
-                    date: "2025-06-28",
-                    summary: "why having a personal brand matters and how you can start building yours today. from blogging to open-source contributions...",
-                    content: `<p>in today's competitive market, being a great developer is sometimes not enough. a personal brand helps you stand out. it's your reputation, your voice, and your presence in the community.</p>`,
-                    likes: 56,
-                    isLiked: false,
-                    comments: []
-                },
-                {
-                    slug: "my-favorite-vs-code-extensions-for-2025",
-                    title: "my favorite vs code extensions for 2025",
-                    date: "2025-06-10",
-                    summary: "a curated list of visual studio code extensions that have significantly boosted my productivity and development workflow...",
-                    content: `<p>a good code editor is a developer's best friend, and vs code's power lies in its vast ecosystem of extensions. here are a few that i can't live without...</p>`,
-                    likes: 73,
-                    isLiked: false,
-                    comments: []
-                }
             ];
 
             // --- STATE ---
@@ -286,28 +246,13 @@
 
             function createHomepagePostHTML(post) {
                 const likedClass = post.isLiked ? 'liked' : '';
-                return `
-                    <div class="full-post-wrapper" data-slug="${post.slug}">
-                        <h2 class="text-3xl font-bold text-white mb-2">${post.title}</h2>
-                        <p class="text-md text-gray-500 mb-8">${formatDate(post.date)}</p>
-                        <div class="text-lg leading-relaxed space-y-6">${post.content}</div>
-                        <div class="mt-12 pt-6 border-t border-gray-800">
-                            <div class="flex items-center gap-4">
-                                <button class="like-button ${likedClass} flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300" data-slug="${post.slug}">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z"></path></svg>
-                                    <span class="like-count">${post.likes}</span>
-                                </button>
-                                <a href="#post/${post.slug}" class="text-gray-400 hover:text-white transition-colors duration-300 text-sm">view comments (${post.comments.length})</a>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                return `<div class="full-post-wrapper" data-slug="${post.slug}"><h2 class="text-3xl font-bold text-white mb-2">${post.title}</h2><p class="text-md text-gray-500 mb-8">${formatDate(post.date)}</p><div class="text-lg leading-relaxed space-y-6">${post.content}</div><div class="mt-12 pt-6 border-t border-gray-800"><div class="flex items-center gap-4"><button class="like-button ${likedClass} flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300" data-slug="${post.slug}"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z"></path></svg><span class="like-count">${post.likes}</span></button><a href="#post/${post.slug}" class="text-gray-400 hover:text-white transition-colors duration-300 text-sm">view comments (${post.comments.length})</a></div></div></div>`;
             }
 
             function createFullPostHTML(post) {
                 const likedClass = post.isLiked ? 'liked' : '';
                 const commentsHTML = post.comments.map(comment => `<div class="bg-gray-950/50 p-4 rounded-lg border border-gray-800 mb-4"><div class="flex justify-between items-center mb-2"><p class="font-semibold text-white">${comment.name}</p><p class="text-xs text-gray-500">${comment.date}</p></div><p class="text-gray-400">${comment.text}</p></div>`).join('');
-                return `<div class="full-post-wrapper" data-slug="${post.slug}"><h1 class="text-4xl font-bold text-white mb-2">${post.title}</h1><p class="text-md text-gray-500 mb-8">${formatDate(post.date)}</p><div class="text-lg leading-relaxed space-y-6">${post.content}</div><div class="mt-12 pt-6 border-t border-gray-800"><div class="flex items-center gap-4"><button class="like-button ${likedClass} flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300" data-slug="${post.slug}"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z"></path></svg><span class="like-count">${post.likes}</span></button></div></div><div class="mt-12"><h2 class="text-2xl font-bold text-white mb-6">comments (${post.comments.length})</h2><div class="comment-list mb-8">${commentsHTML}</div><h3 class="text-xl font-semibold text-white mb-4">leave a comment</h3><form class="comment-form" data-slug="${post.slug}"><div class="mb-4"><input type="text" name="name" placeholder="your name" required class="w-full px-4 py-2 bg-gray-950/80 border border-gray-700 rounded-md text-white focus:ring-2 focus:ring-white focus:outline-none transition-all duration-300"></div><div class="mb-4"><textarea name="comment" placeholder="your comment" required rows="4" class="w-full px-4 py-2 bg-gray-950/80 border border-gray-700 rounded-md text-white focus:ring-2 focus:ring-white focus:outline-none transition-all duration-300"></textarea></div><button type="submit" class="bg-white text-black font-semibold px-5 py-2 rounded-md hover:bg-gray-300 transition-colors duration-300">submit comment</button></form></div></div>`;
+                return `<div class="full-post-wrapper" data-slug="${post.slug}"><h1 class="text-4xl font-bold text-white mb-2">${post.title}</h1><p class="text-md text-gray-500 mb-8">${formatDate(post.date)}</p><div class="text-lg leading-relaxed space-y-6 post-content-text">${post.content}</div><div class="mt-12 pt-6 border-t border-gray-800"><div class="flex items-center gap-4"><button class="like-button ${likedClass} flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300" data-slug="${post.slug}"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z"></path></svg><span class="like-count">${post.likes}</span></button></div></div><div class="mt-12"><h2 class="text-2xl font-bold text-white mb-6">comments (${post.comments.length})</h2><div class="comment-list mb-8">${commentsHTML}</div><h3 class="text-xl font-semibold text-white mb-4">leave a comment</h3><form class="comment-form" data-slug="${post.slug}"><div class="mb-4"><input type="text" name="name" placeholder="your name" required class="w-full px-4 py-2 bg-gray-950/80 border border-gray-700 rounded-md text-white focus:ring-2 focus:ring-white focus:outline-none transition-all duration-300"></div><div class="mb-4"><textarea name="comment" placeholder="your comment" required rows="4" class="w-full px-4 py-2 bg-gray-950/80 border border-gray-700 rounded-md text-white focus:ring-2 focus:ring-white focus:outline-none transition-all duration-300"></textarea></div><button type="submit" class="bg-white text-black font-semibold px-5 py-2 rounded-md hover:bg-gray-300 transition-colors duration-300">submit comment</button></form></div></div>`;
             }
 
             function showSection(sectionId) {
@@ -412,7 +357,6 @@
 
             function initialize() {
                 setupCanvas();
-                draw();
                 initializeHomepage();
                 sortAndRenderPosts();
                 const subscriptionHTML = createSubscriptionSectionHTML();
