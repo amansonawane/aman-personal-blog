@@ -82,13 +82,13 @@
             <section id="home" class="page-section">
                 <!-- Hero Introduction Section -->
                 <div class="text-center pt-24 pb-32">
-                    <h1 class="text-3xl font-bold text-white mb-4">curious. driven. hungry.</h1>
+                    <h1 class="text-2xl font-bold text-white mb-4">curious. driven. hungry.</h1>
                     <p class="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
                         hi, i'm aman. welcome to my own small corner of the internet. I was an ex-founding pe analyst at <a href="https://www.successioncapital.in/" target="_blank" rel="noopener noreferrer" class="underline hover:text-white transition-all duration-200 inline-block transform hover:scale-110">scpi</a> - one of india's first search funds. i am a core generalist who likes working in early stage companies directly with the founding teams. you will find me here writing about startups, vc, pe, ai and other stuff that i find interesting.
                     </p>
                 </div>
                 
-                <h2 class="text-3xl font-bold text-white mb-8 text-center">latest posts</h2>
+                <h2 class="text-2xl font-bold text-white mb-8 text-center">latest posts</h2>
                 <div id="recent-posts-container" class="space-y-16"></div>
                 <!-- Subscription section will be injected here by JS -->
             </section>
@@ -496,7 +496,7 @@
             }
 
             function createPostCard(post) {
-                return `<a href="#post/${post.slug}" class="post-link block bg-gray-950/50 p-6 rounded-lg border border-gray-800 hover:border-gray-600 transition-all duration-300" data-slug="${post.slug}"><h2 class="text-xl font-semibold text-white mb-2">${post.title}</h2><p class="text-sm text-gray-500 mb-3">${formatDate(post.date)}</p><p class="text-gray-400 leading-relaxed">${post.summary}</p></a>`;
+                return `<a href="#post/${post.slug}" class="post-link block bg-gray-950/50 p-6 rounded-lg border border-gray-800 hover:border-gray-600 transition-all duration-300" data-slug="${post.slug}"><h2 class="text-xl font-semibold text-white mb-2">${post.title}</h2><p class="text-sm text-gray-200 mb-3">${formatDate(post.date)}</p></a>`;
             }
 
             function renderPostCards(container, posts) {
@@ -506,13 +506,13 @@
 
             function createHomepagePostHTML(post) {
                 const likedClass = post.isLiked ? 'liked' : '';
-                return `<div class="full-post-wrapper" data-slug="${post.slug}"><h2 class="text-3xl font-bold text-white mb-2">${post.title}</h2><p class="text-md text-gray-500 mb-8">${formatDate(post.date)}</p><div class="text-lg leading-relaxed space-y-6">${post.content}</div><div class="mt-12 pt-6 border-t border-gray-800"><div class="flex items-center gap-4"><button class="like-button ${likedClass} flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300" data-slug="${post.slug}"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z"></path></svg><span class="like-count">${post.likes}</span></button><a href="#post/${post.slug}" class="text-gray-400 hover:text-white transition-colors duration-300 text-sm">view comments (${post.comments.length})</a></div></div></div>`;
+                return `<div class="full-post-wrapper" data-slug="${post.slug}"><h2 class="text-3xl font-bold text-white mb-2">${post.title}</h2><p class="text-md text-gray-200 mb-8">${formatDate(post.date)}</p><div class="text-lg leading-relaxed space-y-6 text-gray-200">${post.content}</div><div class="mt-12 pt-6 border-t border-gray-800"><div class="flex items-center gap-4"><button class="like-button ${likedClass} flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300" data-slug="${post.slug}"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z"></path></svg><span class="like-count">${post.likes}</span></button><a href="#post/${post.slug}" class="text-gray-400 hover:text-white transition-colors duration-300 text-sm">view comments (${post.comments.length})</a></div></div></div>`;
             }
 
             function createFullPostHTML(post) {
                 const likedClass = post.isLiked ? 'liked' : '';
                 const commentsHTML = post.comments.map(comment => `<div class="bg-gray-950/50 p-4 rounded-lg border border-gray-800 mb-4"><div class="flex justify-between items-center mb-2"><p class="font-semibold text-white">${comment.name}</p><p class="text-xs text-gray-500">${comment.date}</p></div><p class="text-gray-400">${comment.text}</p></div>`).join('');
-                return `<div class="full-post-wrapper" data-slug="${post.slug}"><h1 class="text-4xl font-bold text-white mb-2">${post.title}</h1><p class="text-md text-gray-500 mb-8">${formatDate(post.date)}</p><div class="text-lg leading-relaxed space-y-6 post-content-text">${post.content}</div><div class="mt-12 pt-6 border-t border-gray-800"><div class="flex items-center gap-4"><button class="like-button ${likedClass} flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300" data-slug="${post.slug}"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z"></path></svg><span class="like-count">${post.likes}</span></button></div></div><div class="mt-12"><h2 class="text-2xl font-bold text-white mb-6">comments (${post.comments.length})</h2><div class="comment-list mb-8">${commentsHTML}</div><h3 class="text-xl font-semibold text-white mb-4">leave a comment</h3><form class="comment-form" data-slug="${post.slug}"><div class="mb-4"><input type="text" name="name" placeholder="your name" required class="w-full px-4 py-2 bg-gray-950/80 border border-gray-700 rounded-md text-white focus:ring-2 focus:ring-white focus:outline-none transition-all duration-300"></div><div class="mb-4"><textarea name="comment" placeholder="your comment" required rows="4" class="w-full px-4 py-2 bg-gray-950/80 border border-gray-700 rounded-md text-white focus:ring-2 focus:ring-white focus:outline-none transition-all duration-300"></textarea></div><button type="submit" class="bg-white text-black font-semibold px-5 py-2 rounded-md hover:bg-gray-300 transition-colors duration-300">submit comment</button></form></div></div>`;
+                return `<div class="full-post-wrapper" data-slug="${post.slug}"><h1 class="text-4xl font-bold text-white mb-2">${post.title}</h1><p class="text-md text-gray-200 mb-8">${formatDate(post.date)}</p><div class="text-lg leading-relaxed space-y-6 post-content-text text-gray-200">${post.content}</div><div class="mt-12 pt-6 border-t border-gray-800"><div class="flex items-center gap-4"><button class="like-button ${likedClass} flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300" data-slug="${post.slug}"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z"></path></svg><span class="like-count">${post.likes}</span></button></div></div><div class="mt-12"><h2 class="text-2xl font-bold text-white mb-6">comments (${post.comments.length})</h2><div class="comment-list mb-8">${commentsHTML}</div><h3 class="text-xl font-semibold text-white mb-4">leave a comment</h3><form class="comment-form" data-slug="${post.slug}"><div class="mb-4"><input type="text" name="name" placeholder="your name" required class="w-full px-4 py-2 bg-gray-950/80 border border-gray-700 rounded-md text-white focus:ring-2 focus:ring-white focus:outline-none transition-all duration-300"></div><div class="mb-4"><textarea name="comment" placeholder="your comment" required rows="4" class="w-full px-4 py-2 bg-gray-950/80 border border-gray-700 rounded-md text-white focus:ring-2 focus:ring-white focus:outline-none transition-all duration-300"></textarea></div><button type="submit" class="bg-white text-black font-semibold px-5 py-2 rounded-md hover:bg-gray-300 transition-colors duration-300">submit comment</button></form></div></div>`;
             }
 
             function showSection(sectionId) {
@@ -632,3 +632,4 @@
 
 </body>
 </html>
+
